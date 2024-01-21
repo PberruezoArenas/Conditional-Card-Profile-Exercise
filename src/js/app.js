@@ -29,11 +29,16 @@ function render(variables = {}) {
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
+  if (variables.name == null) variables.name = "Name";
+  if (variables.lastName == null) variables.lastName = "LastName";
+
+  
+
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>${variables.name}</h1>
+          <h1>${variables.name} ${variables.lastName}</h1>
           <h2>Web Developer</h2>
           <h3>Miami, USA</h3>
           <ul class="position-right">
@@ -89,3 +94,54 @@ window.onload = function() {
     });
   });
 };
+
+// Name and Last name
+// if (variables.name == null) variables.name = "Name";
+// if (variables.lastname == null) variables.lastname = "LastName";
+
+// //Social Media links
+// //Twitter
+// if (variables.twitter != null) variables.twitter;
+// //Github
+// if (variables.github != null) variables.github;
+// //Linkedin
+// if (variables.linkedin != null) variables.linkedin;
+// //IG
+// if (variables.instagram != null) variables.instagram;
+
+// // Role
+// let userRole = "<h2>Web Developer</h2>";
+// if (variables.role == "Floor Planner") userRole = "<h2>Floor Planner</h2>";
+// else if (variables.role == "Technical Writter")
+//   userRole = "<h2>Technical Writer</h2>";
+// else if (variables.role == null) userRole = "<h2>Role</h2>";
+
+// // Country & City
+// if (variables.country == null) variables.country = "Country";
+// else if (variables.country == "Germany") variables.country = "Germany";
+// else if (variables.country == "USA") variables.country = "USA";
+// else if (variables.country == "Canada") variables.country = "Canada";
+// else if (variables.country == "Venezuela") variables.country = "Venezuela";
+
+// if (variables.city == null) variables.city = "city";
+// else if (variables.city == "Miami") variables.city = "Miami";
+// else if (variables.city == "Munich") variables.city = "Munich";
+// else if (variables.city == "Caracas") variables.city = "Caracas";
+// else if (variables.city == "Toronto") variables.city = "Toronto";
+
+// reset the website body with the new html output
+// document.querySelector("#widget_content").innerHTML = `<div class="widget">
+// ${cover}
+// <img src="${variables.avatarURL}" class="photo" />
+// <h1>${variables.name} ${variables.lastname}</h1>
+// <h2>${variables.role}</h2>
+// <h3>${variables.city}, ${variables.country}</h3>
+// <ul class=${variables.socialMediaPosition}>
+// <li><a href="https://twitter.com/${variables.twitter}"><i class="fa fa-twitter"></i></a></li>
+// <li><a href="https://github.com/${variables.github}"><i class="fa fa-github"></i></a></li>
+// <li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fa fa-linkedin"></i></a></li>
+// <li><a href="https://instagram.com/${variables.instagram}"><i class="fa fa-instagram"></i></a></li>
+// </ul>
+// </div>
+// `;
+// }
