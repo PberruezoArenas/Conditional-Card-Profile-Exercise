@@ -1,5 +1,4 @@
 import "../style/index.css";
-
 /**
  *  EDIT ONLY INSIDE THIS RENDER FUNCTION
  *  This function is called every time the user changes types or changes any input
@@ -14,7 +13,6 @@ import "../style/index.css";
         github: null,
         linkedin: null,
         instagram: null,
-
         name: null,
         lastName: null,
         role: null,
@@ -26,57 +24,51 @@ function render(variables = {}) {
   console.log("These are the current variables: ", variables); // print on the console
   // here we ask the logical questions to make decisions on how to build the html
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
-  let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
-  if (variables.includeCover == false) cover = "<div class='cover'></div>";
-
-  // Name & Last Name
-  if (variables.name == null) variables.name = "Name";
-  if (variables.lastName == null) variables.lastName = "Lastname";
-
-  // //Social Media links
-  // //Twitter
-  if (variables.twitter != null) variables.twitter;
-  //Github
-  if (variables.github != null) variables.github;
-  //Linkedin
-  if (variables.linkedin != null) variables.linkedin;
-  //IG
-  if (variables.instagram != null) variables.instagram;
-
-  // Role
-  if (variables.role == null) variables.role = "Role";
-
-  //Country
-  if (variables.country == null) variables.country = "Country";
-  else if (variables.country == "Germany") variables.country = "Germany";
-  else if (variables.country == "USA") variables.country = "USA";
-  else if (variables.country == "Canada") variables.country = "Canada";
-  else if (variables.country == "Venezuela") variables.country = "Venezuela";
-
-  //City
-  if (variables.city == null) variables.city = "City";
-  else if (variables.city == "Miami") variables.city = "Miami";
-  else if (variables.city == "Munich") variables.city = "Munich";
-  else if (variables.city == "Caracas") variables.city = "Caracas";
-  else if (variables.city == "Toronto") variables.city = "Toronto";
-
+  //
+  // if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  let contentWithoutImg = function(key) {
+    if (key === "includeCover") {
+      return variables[key] === false
+        ? "<div class='cover'></div>"
+        : `<div class="cover"><img src="${variables.background}" /></div>`;
+    }
+    if (key === "avatarURL") {
+      return variables[key] === ""
+        ? "<div></div>"
+        : `<img src="${variables.avatarURL}" class="photo" />`;
+    }
+  };
+  let cover = contentWithoutImg("includeCover");
+  // let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
+  // if (variables.includeCover == false) cover = "<div class='cover'></div>";
+  let contentIfNotNull = function(key) {
+    return variables[key] === null ? "" : variables[key];
+  };
+  //<img src="${variables.avatarURL}" class="photo" />
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>${variables.name} ${variables.lastName}</h1>
-          <h2>${variables.role}</h2>
-          <h3>${variables.city} ${variables.country}</h3>
-          <ul class=${variables.socialMediaPosition}>
-            <li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>
+          <div class="avatar">${contentWithoutImg("avatarURL")}</div>
+          <h1>${contentIfNotNull("name")} ${contentIfNotNull("lastName")}</h1>
+          <h2>${contentIfNotNull("role")}</h2>
+          <h3>${contentIfNotNull("city")}, ${contentIfNotNull("country")}</h3>
+          <ul class="${contentIfNotNull("socialMediaPosition")}">
+            <li><a href="https://twitter.com/${contentIfNotNull(
+              "twitter"
+            )}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${contentIfNotNull(
+              "github"
+            )}" target="_blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/${contentIfNotNull(
+              "linkedin"
+            )}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${contentIfNotNull(
+              "instagram"
+            )}" target="_blank"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
 }
-
 /**
  * Don't change any of the lines below, here is where we do the logic for the dropdowns
  */
@@ -102,7 +94,6 @@ window.onload = function() {
     city: null
   };
   render(window.variables); // render the card for the first time
-
   document.querySelectorAll(".picker").forEach(function(elm) {
     elm.addEventListener("change", function(e) {
       // <- add a listener to every input
@@ -120,3 +111,4 @@ window.onload = function() {
     });
   });
 };
+
